@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import clsx from "clsx";
 
 function TopbarButton({
   link,
@@ -13,15 +14,16 @@ function TopbarButton({
   const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     router.push(link);
-  };
+  }, [link]);
 
   return (
     <button
-      className={`home-btn${isHovered ? " hovered" : ""}${
-        isClicked ? " clicked" : ""
-      }`}
+      className={clsx("home-btn", {
+        hovered: isHovered,
+        clicked: isClicked,
+      })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onMouseDown={() => setIsClicked(true)}

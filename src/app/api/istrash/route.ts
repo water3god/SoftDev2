@@ -30,15 +30,17 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    console.log(visionRes)
-
     const visionData = await visionRes.json();
+    console.log(visionData)
+    console.log(visionData.statusText == "Forbidden", visionData.statusText)
+    if (visionData.error) {
+      return NextResponse.json({ error: visionData.error .message}, { status: 500 });
+    }
     const labels =
       visionData.responses?.[0]?.labelAnnotations?.map((label: any) => ({
         description: label.description ?? "",
         score: label.score ?? 0,
       })) ?? [];
-
     return NextResponse.json({ labels });
   } catch (error) {
     console.error(error);
