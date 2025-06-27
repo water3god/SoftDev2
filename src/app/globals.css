@@ -14,7 +14,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #fef9f9;
+    --background: #ffffff;
     --foreground: #000000;
   }
 }
@@ -36,6 +36,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.topbar-buttons {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
 }
 
 .home-btn {

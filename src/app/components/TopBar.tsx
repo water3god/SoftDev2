@@ -1,32 +1,47 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function Topbar() {
+function TopbarButton({
+  link,
+  name,
+}: Readonly<{
+  link: string;
+  name: string;
+}>) {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
 
-  const handleHomeClick = () => {
-    router.push("/vision");
+  const handleClick = () => {
+    router.push(link);
   };
 
   return (
+    <button
+      className={`home-btn${isHovered ? " hovered" : ""}${
+        isClicked ? " clicked" : ""
+      }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onMouseDown={() => setIsClicked(true)}
+      onMouseUp={() => setIsClicked(false)}
+      onMouseOut={() => setIsClicked(false)}
+      onClick={handleClick}
+    >
+      {name}
+    </button>
+  );
+}
+
+export default function Topbar() {
+  return (
     <div className="topbar">
       <span>Trash Identifier</span>
-      <button
-        className={`home-btn${isHovered ? " hovered" : ""}${
-          isClicked ? " clicked" : ""
-        }`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onMouseDown={() => setIsClicked(true)}
-        onMouseUp={() => setIsClicked(false)}
-        onMouseOut={() => setIsClicked(false)}
-        onClick={handleHomeClick}
-      >
-        Home
-      </button>
+      <div className="topbar-buttons">
+        <TopbarButton name="Home" link={"/"} />
+        <TopbarButton name="Vision" link={"/vision"} />
+      </div>
     </div>
   );
 }
